@@ -1,0 +1,16 @@
+{
+    "name": "sample-webrtc-app",
+    "version": "0.0.1",
+    "description": "simple video chat app to learn how webrtc works exactly",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "denilgabani",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.19.2",
+        "socket.io": "^4.7.5"
+    }
+}
