@@ -9,13 +9,17 @@ async function init() {
     try {
         localStream = await navigator.mediaDevices.getUserMedia({
             video: true,
+            audio: true,
         });
         localVideo.srcObject = localStream;
 
         pc = new RTCPeerConnection();
 
-        pc.onaddstream = (event) => {
-            remoteVideo.srcObject = event.stream;
+        pc.ontrack = (event) => {
+            console.log("event: ", event);
+            if (event.streams && event.streams[0]) {
+                remoteVideo.srcObject = event.streams[0]; // Use event.streams[0] for remote stream
+            }
         };
 
         pc.onicecandidate = (event) => {
@@ -25,7 +29,9 @@ async function init() {
             }
         };
 
-        pc.addStream(localStream);
+        localStream
+            .getTracks()
+            .forEach((track) => pc.addTrack(track, localStream));
     } catch (error) {
         console.error("Error starting:", error);
     }
@@ -50,7 +56,6 @@ async function receiveOfferAndCreateAnswer(offer) {
         const answer = await pc.createAnswer();
         await pc.setLocalDescription(answer);
 
-        pc.addStream(localStream);
         // Send the answer to the remote peer
         socket.emit("message", { answer: pc.localDescription });
     } catch (error) {
