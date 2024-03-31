@@ -18,6 +18,13 @@ async function init() {
             remoteVideo.srcObject = event.stream;
         };
 
+        pc.onicecandidate = (event) => {
+            if (event.candidate) {
+                // Send the candidate to the remote peer
+                socket.emit("message", { candidate: event.candidate });
+            }
+        };
+
         pc.addStream(localStream);
     } catch (error) {
         console.error("Error starting:", error);
@@ -57,6 +64,8 @@ socket.on("message", (message) => {
         receiveOfferAndCreateAnswer(message.offer);
     } else if (message.answer) {
         pc.setRemoteDescription(message.answer);
+    } else if (message.candidate) {
+        pc.addIceCandidate(new RTCIceCandidate(message.candidate));
     }
 });
 
