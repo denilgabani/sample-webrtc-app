@@ -44,7 +44,7 @@ A single static page app so that we can easily understand how to use the WebRTC 
 
 **Further resources:**
 
-The blog post explaining the code: [https://blog.denilgabani.com/a-simple-webrtc-app]((https://blog.denilgabani.com/a-simple-webrtc-app)
+The blog post explaining the code: [https://blog.denilgabani.com/a-simple-webrtc-app](https://blog.denilgabani.com/a-simple-webrtc-app)
 WebRTC documentation: https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API
 
 
